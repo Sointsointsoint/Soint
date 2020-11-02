@@ -1,0 +1,58 @@
+// -------------------/ HTML /------------------- 
+
+<div class="wrapper">
+	<div class="tabs">
+	        <span class="tab active" data-id="1" >1 квітня</span>
+	        <span class="tab" data-id="2">2 квітня</span>
+	</div>
+	<div class="tab_content">
+		<div class="tab-item active-tab" id="1">
+		</div>
+	</div>
+</div>
+// -------------------/ jQuery /------------------- 
+
+$('.wrapper .tab').on('click', function(event) {
+var id = $(this).attr('data-id');
+	$('.wrapper').find('.tab-item').removeClass('active-tab').hide();
+	$('.wrapper .tabs').find('.tab').removeClass('active');
+	$(this).addClass('active');
+	$('#'+id).addClass('active-tab').fadeIn();
+	return false;
+});
+
+// -------------------/ CSS /------------------- 
+.tab-item {
+  .tab::first-child {
+  display: none;
+  }
+}
+
+
+
+
+
+================================================
+      <div class="tabs-wrapper">
+        <div class="tabs-triggers">
+          <a href="#tab-1" class="tabs-triggers__item">Tab 1</a>
+          <a href="#tab-2" class="tabs-triggers__item">Tab 2</a>
+        </div>
+        <div class="tabs-content">
+          <div class="tabs-content__item" id="tab-1">Content 1</div>
+          <div class="tabs-content__item" id="tab-2">Content 2</div>
+        </div>
+      </div>
+
+
+ $('.tab').click(function (e) {
+    e.preventDefault();
+
+    $('.tab').removeClass('active');
+    $('.tab-item').removeClass('active');
+
+    $(this).addClass('active');
+    $($(this).attr('href')).addClass('active');
+
+  });
+  $('.tab:first').click();

@@ -1,0 +1,20 @@
+ $('.menu-list__link').click(function (event) {
+    const parent = $(this).parent();
+
+    if (parent.hasClass('open')) {
+      parent.removeClass('open');
+    } else {
+      $('.menu-list__item').removeClass('open')
+      parent.addClass('open');
+    }
+  });
+
+	======================================================
+	
+
+  $('.dropdown-menu__title').click(function (event) {
+    if ($('.dropdown-menu').hasClass('accordion')) {
+      $('.dropdown-menu__column').not($(this).next()).slideUp(200);
+    }
+    $(this).next().slideToggle(200);
+  });

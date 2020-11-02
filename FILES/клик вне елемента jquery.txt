@@ -1,0 +1,30 @@
+const burger = $('.burger'),
+    menu = $('.mobile-header__drop'), //= меню
+    body = $('body'), //= скролл на мобілці
+    bg = $('.bg'); //= подложка
+
+
+  burger.on('click', function () {
+    if ($(this).hasClass('open')) {
+      $(this).removeClass('open');
+      menu.removeClass('open');
+    } else {
+      $(this).addClass('open');
+      menu.addClass('open');
+      body.addClass('lock');
+      bg.addClass('active');
+    }
+  });
+
+  $(document).click(function (e) {
+    if (!burger.is(e.target) && !menu.is(e.target) && menu.has(e.target).length === 0) {
+      burger.removeClass('open');
+      menu.removeClass('open');
+      body.removeClass('lock');
+      bg.removeClass('active');
+    };
+  });
+
+
+
+https://only-to-top.ru/blog/coding/2019-09-30-klik-vne-elementa.html - тут само клік на чистом джесі
