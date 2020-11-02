@@ -34,7 +34,7 @@ const svgSprites = () => {
 }
 
 const htmlInclude = () => {
-  return src(['./src/*.html'])
+  return src(['./src/**/*.html'])
     .pipe(fileinclude({
       prefix: '@',
       basepath: '@file'
@@ -44,9 +44,12 @@ const htmlInclude = () => {
 }
 
 const fonts = () => {
+  src('./src/fonts/**.ttf')
+    .pipe(ttf2woff())
+    .pipe(dest('./app/fonts/'))
   return src('./src/fonts/**.ttf')
     .pipe(ttf2woff2())
-    .pipe(dest('./app/fonts/'));
+    .pipe(dest('./app/fonts/'))
 }
 
 const checkWeight = (fontname) => {
@@ -141,13 +144,8 @@ const styles = () => {
 }
 
 const imgToApp = () => {
-  return src(['./src/images/**.jpg', './src/images/**.png', './src/images/**.jpeg'])
+  return src(['./src/images/**.jpg', './src/images/**.png', './src/images/**.jpeg', './src/images/**.svg',])
     .pipe(dest('./app/images'))
-}
-
-const resources = () => {
-  return src('./src/resources/**')
-    .pipe(dest('./app'))
 }
 
 const clean = () => {
@@ -191,13 +189,12 @@ const watchFiles = () => {
   });
 
   watch('./src/scss/**/*.scss', styles);
-  watch('./src/*.html', htmlInclude);
+  watch('./src/**/*.html', htmlInclude);
   watch('./src/images/**.jpg', imgToApp);
   watch('./src/images/**.png', imgToApp);
   watch('./src/images/**.jpeg', imgToApp);
   watch('./src/images/**.svg', svgSprites);
   watch('./src/images/**.svg', svgSprites);
-  watch('./src/resources/**', resources);
   watch('./src/fonts/**.ttf', fonts);
   watch('./src/fonts/**.ttf', fontsStyle);
   watch('./src/js/**/*.js', scripts);
@@ -208,7 +205,7 @@ exports.styles = styles;
 exports.watchFiles = watchFiles;
 exports.fileinclude = htmlInclude;
 
-exports.default = series(clean, parallel(htmlInclude, scripts, fonts, resources, imgToApp, svgSprites), fontsStyle, styles, watchFiles);
+exports.default = series(clean, parallel(htmlInclude, scripts, fonts, imgToApp, svgSprites), fontsStyle, styles, watchFiles);
 
 
 // Build
@@ -273,7 +270,7 @@ const htmlMinify = () => {
     .pipe(dest('app'));
 }
 
-exports.build = series(clean, parallel(htmlInclude, scriptsBuild, fonts, resources, imgToApp, svgSprites), fontsStyle, stylesBuild, htmlMinify, tinypng);
+exports.build = series(clean, parallel(htmlInclude, scriptsBuild, fonts, imgToApp, svgSprites), fontsStyle, stylesBuild, htmlMinify, tinypng);
 
 
 // // deploy
